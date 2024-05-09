@@ -76,6 +76,22 @@ public class RepositorioTramiteTxt
         }
     }
 
+    public List<Tramite> TramiteConsultaPorEtiqueta(EtiquetaTramite etiqueta) {
+          List<Tramite> listaTramites = new List<Tramite>();  
+
+            using var sr = new StreamReader(_nombreArch,true);
+          
+            while (!sr.EndOfStream)
+            {
+                Tramite tActual = leerTramite(sr); // nos traemos el expediente actual
+                if (tActual.TipoTramite == etiqueta){
+                     listaTramites.Add(tActual)
+                     }
+            }
+            return listaTramites;
+    }
+    
+
 //==================== metodos privados 
     private void escribirValores (Tramite t, StreamWriter sw)
     {

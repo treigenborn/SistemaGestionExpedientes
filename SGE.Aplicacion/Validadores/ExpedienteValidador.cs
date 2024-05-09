@@ -15,6 +15,6 @@ public static class ExpedienteValidador
       if (e.UsuarioUltModificacion <=0) 
         msj +="el id de usuario debe ser un id válido (entero mayor que 0)";
 
-      if (msj !="")throw new ValidacionException(msj);
+      if (msj !="") throw new ValidacionException(msj);
     }
 }

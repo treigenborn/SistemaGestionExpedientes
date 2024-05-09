@@ -1,9 +1,17 @@
 ﻿namespace SGE.Aplicacion;
 
-public class CasoDeUsoTramiteModificacion (ITramiteRepositorio repoTramite)
+public class CasoDeUsoTramiteModificacion(
+    ITramiteRepositorio repoTramite,
+    IServicioAutorizacion autorizador,
+    ServicioActualizacionEstado actualizacionEstado
+)
 {
-    public void Ejecutar(Tramite t)
+    public void Ejecutar(Tramite t, int IdUsuario)
     {
-        repoTramite.TramiteModificacion(t); 
+        if (autorizador.TienePermiso(IdUsuario, Permiso.TramiteModificacion))
+        {
+            repoTramite.TramiteModificacion(t);
+            actualizacionEstado.actualizacionEstadoExpediente(t.IdExpediente, t.EtiquetaTramite);
+        }
     }
 }
