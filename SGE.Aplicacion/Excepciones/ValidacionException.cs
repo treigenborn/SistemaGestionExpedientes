@@ -6,4 +6,8 @@ public class ValidacionException : Exception
     {
         
     }
+     public ValidacionException()  : base("Error de validación: la entidad no cumple con los requisitos exigidos.")
+    {
+        
+    }
 }

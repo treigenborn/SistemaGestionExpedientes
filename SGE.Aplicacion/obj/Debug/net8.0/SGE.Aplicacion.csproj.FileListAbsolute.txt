@@ -1,0 +1,12 @@
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/bin/Debug/net8.0/SGE.Aplicacion.deps.json
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/bin/Debug/net8.0/SGE.Aplicacion.dll
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/bin/Debug/net8.0/SGE.Aplicacion.pdb
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/SGE.Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/SGE.Aplicacion.AssemblyInfoInputs.cache
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/SGE.Aplicacion.AssemblyInfo.cs
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/SGE.Aplicacion.csproj.CoreCompileInputs.cache
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/SGE.Aplicacion.sourcelink.json
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/SGE.Aplicacion.dll
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/refint/SGE.Aplicacion.dll
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/SGE.Aplicacion.pdb
+/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/Debug/net8.0/ref/SGE.Aplicacion.dll

@@ -6,4 +6,8 @@ public class RepositorioException : Exception
     {
         
     }
+      public RepositorioException()  : base("Error de Repositorio: la entidad no existe.")
+    {
+        
+    }
 }

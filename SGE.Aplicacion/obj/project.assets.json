@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
+    "/home/TobiasReigenborn/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Facultad Informatica\\proyecto\\SGE\\SGE.Aplicacion\\SGE.Aplicacion.csproj",
+      "projectUniqueName": "/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/SGE.Aplicacion.csproj",
       "projectName": "SGE.Aplicacion",
-      "projectPath": "C:\\Users\\Usuario\\Desktop\\Facultad Informatica\\proyecto\\SGE\\SGE.Aplicacion\\SGE.Aplicacion.csproj",
-      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Desktop\\Facultad Informatica\\proyecto\\SGE\\SGE.Aplicacion\\obj\\",
+      "projectPath": "/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/SGE.Aplicacion.csproj",
+      "packagesPath": "/home/TobiasReigenborn/.nuget/packages/",
+      "outputPath": "/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/TobiasReigenborn/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -64,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
