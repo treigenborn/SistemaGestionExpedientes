@@ -6,13 +6,17 @@ public class RepositorioTramiteTxt
 {
      static int contadorTramites = contadorActual();
      static readonly string _nombreArch ="Tramites.txt"; 
-      public void TramiteAlta (Tramite t)
+      
+      
+      
+    public void TramiteAlta (Tramite t, int IdUsuario)
     {
         try
         {
             TramiteValidador.Validar(t); 
             using var sw = new StreamWriter(_nombreArch,true);
-            t.IdTramite = ++contadorTramites; // teniendo en cuenta que en el main nos llega un id 0
+            t.IdTramite = ++contadorTramites;
+            t.UsuarioUltModificacion = IdUsuario; // teniendo en cuenta que en el main nos llega un id 0
             escribirValores(t,sw); 
         }
         catch (ValidacionException exc)
@@ -47,7 +51,7 @@ public class RepositorioTramiteTxt
 
     }
 
-    public void TramiteModificacion (Tramite tModificar ) 
+    public void TramiteModificacion (Tramite tModificar, int IdUsuario ) 
     {
 
         try 
@@ -64,7 +68,7 @@ public class RepositorioTramiteTxt
                 tActual.FechaUltModificacion = DateTime.Now;
                 tActual.TipoTramite = tModificar.TipoTramite;
                 tActual.ContenidoTramite = tModificar.ContenidoTramite;
-                // tActual.usuarioUltModificacion = id Usuario que moddifica ; 
+                tActual.usuarioUltModificacion = IdUsuario; 
                 encontre = true;
                 }
             }

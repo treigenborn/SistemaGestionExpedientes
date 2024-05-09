@@ -8,7 +8,7 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     static int contadorExpedientes = contadorActual();
     static readonly string _nombreArch = "Expedientes.txt";
 
-    public void ExpedienteAlta(Expediente e)
+    public void ExpedienteAlta(Expediente e, int IdUsuario)
     {
         // modificar para lanzar la excepcion aca.
         try
@@ -22,7 +22,7 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
             sw.WriteLine(e.FechaModificacion);
             sw.WriteLine(e.Caratula);
             sw.WriteLine(e.Estado);
-            sw.WriteLine(e.UsuarioUltModificacion);
+            sw.WriteLine(IdUsuario);
         }
         catch (ValidacionException exc)
         {
@@ -61,7 +61,7 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
         }
     }
 
-    public void ExpedienteModificacion(Expediente eModificar)
+    public void ExpedienteModificacion(Expediente eModificar, int IdUsuario)
     {
         try
         {
@@ -76,9 +76,10 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
                     eActual.FechaModificacion = DateTime.Now;
                     eActual.Caratula = eModificar.Caratula;
                     eActual.Estado = eModificar.Estado;
-                    // eActual.usuarioUltModificacion = id Usuario que moddifica ;
+                    eActual.UsuarioUltModificacion = IdUsuario;
                     encontre = true;
                 }
+                listaExpediente.Add(eActual);
             }
             if (encontre)
                 actualizarArchivo(listaExpediente);

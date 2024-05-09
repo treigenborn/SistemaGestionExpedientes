@@ -10,7 +10,7 @@ public class CasoDeUsoExpedienteAlta (IExpedienteRepositorio repoExpediente, ISe
 
         e.FechaCreacion = DateTime.Now;
         e.FechaModificacion = DateTime.Now;
-        repoExpediente.ExpedienteAlta(e);
+        repoExpediente.ExpedienteAlta(e, IdUsuario);
         }
     }
 
