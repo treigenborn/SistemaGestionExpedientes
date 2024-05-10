@@ -8,10 +8,18 @@ public class CasoDeUsoTramiteModificacion(
 {
     public void Ejecutar(Tramite t, int IdUsuario)
     {
-        if (autorizador.TienePermiso(IdUsuario, Permiso.TramiteModificacion))
+        try
         {
-            repoTramite.TramiteModificacion(t, IdUsuario);
-            actualizacionEstado.actualizacionEstadoExpediente(t.IdExpediente, t.EtiquetaTramite);
+            if (autorizador.TienePermiso(IdUsuario, Permiso.TramiteModificacion))
+            {
+                repoTramite.TramiteModificacion(t, IdUsuario);
+                actualizacionEstado.actualizacionEstadoExpediente(t.IdExpediente, t.EtiquetaTramite);
+            }
+            else throw new AutorizacionException(); 
+        }
+        catch (AutorizacionException e)
+        {
+            Console.WriteLine(e.Message); 
         }
     }
 }

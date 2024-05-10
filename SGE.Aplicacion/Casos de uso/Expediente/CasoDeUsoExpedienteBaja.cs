@@ -7,9 +7,19 @@ public class CasoDeUsoExpedienteBaja(
 {
     public void Ejecutar(int idBaja, int IdUsuario)
     {
-        if (autorizador.TienePermiso(IdUsuario, Permiso.ExpedienteBaja))
+        try
         {
-            repoExpediente.ExpedienteBaja(idBaja);
+            if (autorizador.TienePermiso(IdUsuario, Permiso.ExpedienteBaja))
+            {
+                repoExpediente.ExpedienteBaja(idBaja);
+            }
+            else{
+                throw new AutorizacionException();
+            }
+        }
+        catch (AutorizacionException e)
+        {
+            Console.WriteLine(e.Message); 
         }
     }
 }

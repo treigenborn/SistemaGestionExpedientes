@@ -4,9 +4,19 @@ public class CasoDeUsoExpedienteModificacion (IExpedienteRepositorio repo, IServ
 {
     public void Ejecutar (Expediente e, int IdUsuario)
     {
-        if(autorizador.TienePermiso(IdUsuario, Permiso.ExpedienteModificacion)){
-        e.FechaModificacion = DateTime.Now;
-        repo.ExpedienteModificacion(e);
+        try
+        {
+            if(autorizador.TienePermiso(IdUsuario, Permiso.ExpedienteModificacion)){
+            e.FechaModificacion = DateTime.Now;
+            repo.ExpedienteModificacion(e);
+            }
+            else{
+                throw new AutorizacionException(); 
+            }
+        }
+        catch (AutorizacionException e)
+        {
+            Console.WriteLine(e.Message); 
         }
     }
 }

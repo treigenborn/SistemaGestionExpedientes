@@ -114,6 +114,13 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
         return expedientes;
     }
 
+    public Expediente ExpedienteConTramitesAsociados (int idExpediente)
+    {
+        Expediente exp = ExpedienteConsultaPorId(idExpediente); 
+        exp.listaDeTramites = RepositorioTramiteTxt.TramiteConsultaPorIdExpediente(idExpediente); 
+        return exp; 
+    }
+
     //==================== metodos privados
     private Expediente leerExpediente(StreamReader sr)
     {

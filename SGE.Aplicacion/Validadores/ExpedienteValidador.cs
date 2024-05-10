@@ -7,7 +7,7 @@ public static class ExpedienteValidador
   /*
     modificar la excepcion,devolver boolean
   */
-    public static void Validar (Expediente e)
+    public static boolean Validar (Expediente e)
     {
       string msj="";
       if (string.IsNullOrEmpty(e.Caratula)) 

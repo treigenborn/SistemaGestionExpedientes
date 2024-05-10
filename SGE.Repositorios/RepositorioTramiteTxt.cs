@@ -95,6 +95,21 @@ public class RepositorioTramiteTxt
             return listaTramites;
     }
     
+    public static List <Tramite> TramiteConsultaPorIdExpediente (int idExpediente){
+         List<Tramite> listaTramites = new List<Tramite>();  
+
+            using var sr = new StreamReader(_nombreArch,true);
+          
+            while (!sr.EndOfStream)
+            {
+                Tramite tActual = leerTramite(sr); // nos traemos el expediente actual
+                if (tActual.idExpediente == idExpediente){
+                     listaTramites.Add(tActual)
+                     }
+            }
+            return listaTramites;
+    }
+    }
 
 //==================== metodos privados 
     private void escribirValores (Tramite t, StreamWriter sw)

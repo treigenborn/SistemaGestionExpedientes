@@ -9,4 +9,5 @@ public class Expediente
     public DateTime FechaModificacion {get; set;}
     public int UsuarioUltModificacion {get; set;}
     public EstadoExpediente Estado {get; set;}
+    public List<Tramite> listaDeTramites {get ; set;} 
 }
