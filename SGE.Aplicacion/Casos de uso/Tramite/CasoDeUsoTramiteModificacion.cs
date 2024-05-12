@@ -13,7 +13,7 @@ public class CasoDeUsoTramiteModificacion(
             if (autorizador.TienePermiso(IdUsuario, Permiso.TramiteModificacion))
             {
                 repoTramite.TramiteModificacion(t, IdUsuario);
-                actualizacionEstado.actualizacionEstadoExpediente(t.IdExpediente, t.EtiquetaTramite);
+                actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite, IdUsuario);
             }
             else throw new AutorizacionException(); 
         }

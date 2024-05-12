@@ -3,7 +3,7 @@
 public class CasoDeUsoExpedienteBaja(
     IExpedienteRepositorio repoExpediente,
     IServicioAutorizacion autorizador,
-    ITramiteRepositorio, repoTramite
+    ITramiteRepositorio repoTramite
 )
 {
     public void Ejecutar(int idBaja, int IdUsuario)

@@ -4,7 +4,7 @@ public class CasoDeUsoExpedienteConTramitesAsociados(IExpedienteRepositorio repo
 {
     public Expediente Ejecutar(int idExpediente)
     {
-        Expediente exp = repoExpediente.ExpedienteConsultaPorId(idExpediente));
+        Expediente exp = repoExpediente.ExpedienteConsultaPorId(idExpediente);
         exp.listaDeTramites = repoTramite.TramiteConsultaPorIdExpediente(idExpediente);
         return exp;
     }

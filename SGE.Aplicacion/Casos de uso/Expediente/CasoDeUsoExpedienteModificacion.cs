@@ -6,7 +6,8 @@ public class CasoDeUsoExpedienteModificacion (IExpedienteRepositorio repo, IServ
     {
         if(autorizador.TienePermiso(IdUsuario, Permiso.ExpedienteModificacion)){
         e.FechaModificacion = DateTime.Now;
-        repo.ExpedienteModificacion(e, IdUsuario);
+        e.UsuarioUltModificacion = IdUsuario;
+        repo.ExpedienteModificacion(e);
         }
     }
 }

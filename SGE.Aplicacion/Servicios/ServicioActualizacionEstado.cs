@@ -2,9 +2,9 @@
 
 public class ServicioActualizacionEstado(EspecificacionCambioEstado especificacionCambioEstado, IExpedienteRepositorio repoExpediente)
 {
-    public void actualizacionEstadoExpediente(int IdExpediente, EtiquetaTramite etiqueta) {
+    public void actualizacionEstadoExpediente(int IdExpediente, EtiquetaTramite etiqueta, int IdUsuario) {
        Expediente exp = repoExpediente.ExpedienteConsultaPorId(IdExpediente);
-       exp.Estado = especificacionCambioEstado.cambioEstadoExpediente(etiqueta);
-       repoExpediente.ExpedienteModificacion(exp)
+       exp.Estado = especificacionCambioEstado.cambioEstadoExpediente(etiqueta, exp.Estado);
+       repoExpediente.ExpedienteModificacion(exp, IdUsuario);
     }
 }

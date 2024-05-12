@@ -11,7 +11,8 @@ public class CasoDeUsoExpedienteAlta (IExpedienteRepositorio repoExpediente, ISe
             if(autorizador.TienePermiso(IdUsuario, Permiso.ExpedienteAlta)){
             e.FechaCreacion = DateTime.Now;
             e.FechaModificacion = DateTime.Now;
-            repoExpediente.ExpedienteAlta(e, IdUsuario);
+            e.UsuarioUltModificacion = IdUsuario;
+            repoExpediente.ExpedienteAlta(e);
             }
             else
             {
@@ -19,9 +20,9 @@ public class CasoDeUsoExpedienteAlta (IExpedienteRepositorio repoExpediente, ISe
             }
         }
 
-        catch (AutorizacionException e)
+        catch (AutorizacionException error)
         {
-            console.WriteLine(e.Message); 
+            Console.WriteLine(error.Message); 
         }
     }
 

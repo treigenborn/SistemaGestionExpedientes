@@ -103,7 +103,7 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     }
 
     public List<Expediente> ExpedienteConsultaTodos() {
-        List<Expediente> expedientes = new List<Expediente>
+        List<Expediente> expedientes = new List<Expediente>();
         using var sr = new StreamReader(_nombreArch, true);
         while (!sr.EndOfStream)
         {

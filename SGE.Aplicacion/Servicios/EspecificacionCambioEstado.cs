@@ -2,7 +2,7 @@
 
 public class EspecificacionCambioEstado
 {
-    public EstadoExpediente cambioEstadoExpediente(EtiquetaTramite etiqueta)
+    public EstadoExpediente cambioEstadoExpediente(EtiquetaTramite etiqueta, EstadoExpediente e)
     {
         switch (etiqueta)
         {
@@ -14,6 +14,9 @@ public class EspecificacionCambioEstado
                 break;
             case EtiquetaTramite.PaseAlArchivo:
                 return EstadoExpediente.Finalizado;
+                break;
+            default: 
+               return e;
         }
     }
 }
