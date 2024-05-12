@@ -8,21 +8,21 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     static int contadorExpedientes = contadorActual();
     static readonly string _nombreArch = "Expedientes.txt";
 
-    public void ExpedienteAlta(Expediente e, int IdUsuario)
+    public void ExpedienteAlta(Expediente e)
     {
         // modificar para lanzar la excepcion aca.
         try
         {
             ExpedienteValidador.Validar(e);
             using var sw = new StreamWriter(_nombreArch, true);
-            e.IdExpediente = ++contadorExpedientes; // teniendo en cuenta que en el main nos llega un id 0
+            e.IdExpediente = ++contadorExpedientes; 
             sw.WriteLine(e.IdExpediente);
             sw.WriteLine(e.IdTramite);
             sw.WriteLine(e.FechaCreacion);
             sw.WriteLine(e.FechaModificacion);
             sw.WriteLine(e.Caratula);
             sw.WriteLine(e.Estado);
-            sw.WriteLine(IdUsuario);
+            sw.WriteLine(e.UsuarioUltModificacion);
         }
         catch (ValidacionException exc)
         {
@@ -30,7 +30,6 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
         }
     }
 
-    // tener en cuenta: al dar de baja un expediente, se deben eliminar también todos los trámites asociados.
     public void ExpedienteBaja(int idBorrarExpediente)
     {
         try
@@ -40,7 +39,7 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
             using var sr = new StreamReader(_nombreArch, true);
             while (!sr.EndOfStream)
             {
-                Expediente eActual = leerExpediente(sr); // nos traemos el expediente actual
+                Expediente eActual = leerExpediente(sr); 
                 if (eActual.IdExpediente != idBorrarExpediente)
                     listaExpediente.Add(eActual);
                 else
@@ -59,7 +58,7 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
         }
     }
 
-    public void ExpedienteModificacion(Expediente eModificar, int IdUsuario)
+    public void ExpedienteModificacion(Expediente eModificar)
     {
         try
         {
@@ -68,13 +67,13 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
             using var sr = new StreamReader(_nombreArch, true);
             while (!sr.EndOfStream)
             {
-                Expediente eActual = leerExpediente(sr); // nos traemos el expediente actual
+                Expediente eActual = leerExpediente(sr); 
                 if (eActual.IdExpediente == eModificar.IdExpediente)
                 {
                     eActual.FechaModificacion = DateTime.Now;
                     eActual.Caratula = eModificar.Caratula;
                     eActual.Estado = eModificar.Estado;
-                    eActual.UsuarioUltModificacion = IdUsuario;
+                    eActual.UsuarioUltModificacion = eModificar.UsuarioUltModificacion;
                     encontre = true;
                 }
                 listaExpediente.Add(eActual);

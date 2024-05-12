@@ -11,7 +11,7 @@ public class CasoDeUsoTramiteAlta (ITramiteRepositorio repoTramite, IServicioAut
             t.FechaUltModificacion = DateTime.Now;
             t.UsuarioUltModificacion = IdUsuario;
             repoTramite.TramiteAlta(t); 
-            actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite, IdUsuario);
+            actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite);
             }
             else
             {

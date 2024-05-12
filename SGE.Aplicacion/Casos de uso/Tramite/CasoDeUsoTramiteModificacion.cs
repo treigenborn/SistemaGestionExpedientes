@@ -12,8 +12,8 @@ public class CasoDeUsoTramiteModificacion(
         {
             if (autorizador.TienePermiso(IdUsuario, Permiso.TramiteModificacion))
             {
-                repoTramite.TramiteModificacion(t, IdUsuario);
-                actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite, IdUsuario);
+                repoTramite.TramiteModificacion(t);
+                actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite);
             }
             else throw new AutorizacionException(); 
         }

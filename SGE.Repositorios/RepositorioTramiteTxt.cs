@@ -2,19 +2,19 @@
 
 namespace SGE.Repositorios;
 
-public class RepositorioTramiteTxt
+public class RepositorioTramiteTxt : ITramiteRepositorio
 {
     static int contadorTramites = contadorActual();
     static readonly string _nombreArch = "Tramites.txt";
 
-    public void TramiteAlta(Tramite t, int IdUsuario)
+    public void TramiteAlta(Tramite t)
     {
         try
         {
             TramiteValidador.Validar(t);
             using var sw = new StreamWriter(_nombreArch, true);
             t.IdTramite = ++contadorTramites;
-            t.UsuarioUltModificacion = IdUsuario; // teniendo en cuenta que en el main nos llega un id 0
+            t.UsuarioUltModificacion = t.UsuarioUltModificacion;
             escribirValores(t, sw);
         }
         catch (ValidacionException exc)
@@ -50,7 +50,7 @@ public class RepositorioTramiteTxt
         }
     }
 
-    public void TramiteModificacion(Tramite tModificar, int IdUsuario)
+    public void TramiteModificacion(Tramite tModificar)
     {
         try
         {
@@ -66,7 +66,7 @@ public class RepositorioTramiteTxt
                     tActual.FechaUltModificacion = DateTime.Now;
                     tActual.TipoTramite = tModificar.TipoTramite;
                     tActual.ContenidoTramite = tModificar.ContenidoTramite;
-                    tActual.UsuarioUltModificacion = IdUsuario;
+                    tActual.UsuarioUltModificacion = tModificar.UsuarioUltModificacion;
                     encontre = true;
                 }
             }
@@ -217,14 +217,14 @@ public class RepositorioTramiteTxt
             }
             if (encontre)
             {
-                actualizarArchivo(listaExpediente);
+                actualizarArchivo(listaTramites);
             }
             else
                 throw new RepositorioException("La entidad que se intenta eliminar no existe.");
         }
         catch (RepositorioException e)
         {
-            Console.WriteLine(e.Message());
+            Console.WriteLine(e.Message);
         }
     }
 }

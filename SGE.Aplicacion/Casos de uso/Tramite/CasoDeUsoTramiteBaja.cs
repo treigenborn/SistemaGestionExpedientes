@@ -16,7 +16,7 @@ public class CasoDeUsoTramiteBaja(
                 repoTramite.TramiteBaja(idTramite);
                 if (t.IdTramite == idTramite)
                 {
-                    actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite, IdUsuario);
+                    actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite);
                 }
             }
             else
