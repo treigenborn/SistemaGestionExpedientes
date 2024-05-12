@@ -26,7 +26,7 @@ public class RepositorioTramiteTxt
     }
 
     // poner excepcion 
-    public void ExpedienteBaja (int idBorrarTramite)
+    public void TramiteBaja (int idBorrarTramite)
     {   
         try
         {
@@ -35,14 +35,14 @@ public class RepositorioTramiteTxt
             using var sr = new StreamReader(_nombreArch,true);
             while (!sr.EndOfStream)
             {
-                Tramite tActual = leerTramite(sr); // nos traemos el expediente actual
+                Tramite tActual = leerTramite(sr); 
                 if (tActual.IdTramite != idBorrarTramite) 
                     listaTramite.Add(tActual);        
                 else
                     encontre = true;        
             }
             if (encontre) actualizarArchivo(listaTramite);
-            else throw new RepositorioException ("La entidad que se intenta eliminar no existe."); 
+            else throw new RepositorioException("La entidad que se intenta eliminar no existe."); 
         }
         catch (RepositorioException e)
         {
@@ -61,7 +61,7 @@ public class RepositorioTramiteTxt
             using var sr = new StreamReader(_nombreArch,true);
             while (!sr.EndOfStream)
             {
-                Tramite tActual = leerTramite(sr); // nos traemos el expediente actual
+                Tramite tActual = leerTramite(sr); 
                 if (tActual.IdTramite == tModificar.IdTramite)
                 {
                 tActual.ExpedienteID = tModificar.ExpedienteID;
@@ -72,7 +72,10 @@ public class RepositorioTramiteTxt
                 encontre = true;
                 }
             }
-            if (encontre) actualizarArchivo(listaTramites);
+            if (encontre) {actualizarArchivo(listaTramites)}
+            else {
+                throw new RepositorioException();
+            };
         }
         catch (RepositorioException e)
         {
@@ -87,7 +90,7 @@ public class RepositorioTramiteTxt
           
             while (!sr.EndOfStream)
             {
-                Tramite tActual = leerTramite(sr); // nos traemos el expediente actual
+                Tramite tActual = leerTramite(sr); 
                 if (tActual.TipoTramite == etiqueta){
                      listaTramites.Add(tActual)
                      }
@@ -102,7 +105,7 @@ public class RepositorioTramiteTxt
           
             while (!sr.EndOfStream)
             {
-                Tramite tActual = leerTramite(sr); // nos traemos el expediente actual
+                Tramite tActual = leerTramite(sr); 
                 if (tActual.idExpediente == idExpediente){
                      listaTramites.Add(tActual)
                      }
@@ -178,6 +181,9 @@ public class RepositorioTramiteTxt
 
      public void eliminarTramitesAsociados (int IdExpediente)
     {
+        try
+        {
+        bool encontre = false;
         List<Tramite> listaTramites = new List<Tramite>();
         using var sr = new StreamReader(_nombreArch,true);
         while(!sr.EndOfStream)
@@ -186,9 +192,21 @@ public class RepositorioTramiteTxt
             if (t.ExpedienteID != IdExpediente)
             {
                 listaTramites.Add(t);
+                encontre = true;
             }
         }
-        actualizarArchivo(listaTramites);
+          if (encontre)
+            {
+                actualizarArchivo(listaExpediente);
+            }
+            else
+                throw new RepositorioException("La entidad que se intenta eliminar no existe.");
+        }
+        catch (RepositorioException e)
+        {
+            
+            Console.WriteLine(e.Message());
+        }
     }
 
 }

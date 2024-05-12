@@ -49,8 +49,6 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
             if (encontre)
             {
                 actualizarArchivo(listaExpediente);
-                RepositorioTramiteTxt repoTramite = new RepositorioTramiteTxt();
-                repoTramite.eliminarTramitesAsociados(idBorrarExpediente);
             }
             else
                 throw new RepositorioException("La entidad que se intenta eliminar no existe.");
@@ -112,13 +110,6 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
              expedientes.Add(leerExpediente(sr));
         }
         return expedientes;
-    }
-
-    public Expediente ExpedienteConTramitesAsociados (int idExpediente)
-    {
-        Expediente exp = ExpedienteConsultaPorId(idExpediente); 
-        exp.listaDeTramites = RepositorioTramiteTxt.TramiteConsultaPorIdExpediente(idExpediente); 
-        return exp; 
     }
 
     //==================== metodos privados

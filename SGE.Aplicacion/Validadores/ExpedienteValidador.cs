@@ -4,10 +4,7 @@ namespace SGE.Aplicacion;
 
 public static class ExpedienteValidador
 { 
-  /*
-    modificar la excepcion,devolver boolean
-  */
-    public static boolean Validar (Expediente e)
+    public static void Validar (Expediente e)
     {
       string msj="";
       if (string.IsNullOrEmpty(e.Caratula)) 

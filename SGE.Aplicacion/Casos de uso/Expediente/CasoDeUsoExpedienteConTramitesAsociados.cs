@@ -1,9 +1,11 @@
 namespace SGE.Aplicacion;
 
-public class CasoDeUsoExpedienteConTramitesAsociados(IExpedienteRepositorio repoExpediente)
+public class CasoDeUsoExpedienteConTramitesAsociados(IExpedienteRepositorio repoExpediente, ITramiteRepositorio repoTramite)
 {
-    public Expediemte Ejecutar(int idExpediente)
+    public Expediente Ejecutar(int idExpediente)
     {
-        return repoExpediente.ExpedienteConTramitesAsociados(idExpediente));
+        Expediente exp = repoExpediente.ExpedienteConsultaPorId(idExpediente));
+        exp.listaDeTramites = repoTramite.TramiteConsultaPorIdExpediente(idExpediente);
+        return exp;
     }
 }
