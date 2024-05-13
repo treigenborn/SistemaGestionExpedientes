@@ -22,7 +22,6 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
         }
     }
 
-    // poner excepcion
     public void TramiteBaja(int idBorrarTramite)
     {
         try
@@ -39,9 +38,13 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                     encontre = true;
             }
             if (encontre)
+            {
+                sr.Dispose();
                 actualizarArchivo(listaTramite);
+            }
+                
             else
-                throw new RepositorioException("La entidad que se intenta eliminar no existe.");
+                throw new RepositorioException("El tramite que se intenta eliminar no existe.");
         }
         catch (RepositorioException e)
         {
@@ -69,22 +72,28 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                     encontre = true;
                 }
             }
-            if (encontre)
+            if (encontre) 
             {
+                sr.Dispose();
                 actualizarArchivo(listaTramites);
-            }
+            }         
             else
-            {
-                throw new RepositorioException();
-            }
-            ;
+                 throw new RepositorioException();
         }
         catch (RepositorioException e)
         {
             Console.WriteLine(e.Message);
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
+
+    /* 
+        Evaluar el caso en el que no se encuentre el tramite, que se devuelve? 
+    */
     public List<Tramite> TramiteConsultaPorEtiqueta(EtiquetaTramite etiqueta)
     {
         List<Tramite> listaTramites = new List<Tramite>();
@@ -176,28 +185,27 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
         }
     }
 
+
+
+// modificar desp
     private static int contadorActual()
     {
         using var sr = new StreamReader(_nombreArch, true);
-        using var sr2 = new StreamReader(_nombreArch, true);
-        if (sr2.ReadLine() == null)
-            return 0;
-        else
-        {
-            int ultimoId = 0;
+        int ultimoId = 0;
             while (!sr.EndOfStream)
-            {
-                ultimoId = int.Parse(sr.ReadLine() ?? "");
-                sr.ReadLine();
-                sr.ReadLine();
-                sr.ReadLine();
-                sr.ReadLine();
-                sr.ReadLine();
-                sr.ReadLine();
+            {      
+                string? id = sr.ReadLine();
+                if (!String.IsNullOrEmpty(id))
+                {
+                    ultimoId = Int32.Parse(id);
+                    for (int i=1; i<7; i++){
+                        sr.ReadLine(); 
+                    }
+                }
             }
-            return ultimoId;
-        }
+        return ultimoId; 
     }
+
 
     public void eliminarTramitesAsociados(int IdExpediente)
     {

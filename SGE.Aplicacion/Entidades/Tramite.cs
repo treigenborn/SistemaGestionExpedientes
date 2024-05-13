@@ -26,5 +26,6 @@ public class Tramite
         TipoTramite = EtiquetaTramite.EscritoPresentado;
         FechaCreacion = DateTime.Now;
         FechaUltModificacion = DateTime.Now;
+        ContenidoTramite="";
     }
 }

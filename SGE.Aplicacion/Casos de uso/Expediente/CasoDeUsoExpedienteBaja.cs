@@ -13,7 +13,9 @@ public class CasoDeUsoExpedienteBaja(
             if (autorizador.TienePermiso(IdUsuario, Permiso.ExpedienteBaja))
             {
                 repoExpediente.ExpedienteBaja(idBaja);
-                repoTramite.eliminarTramitesAsociados(idBaja);
+                List<Tramite> listaTramites = repoTramite.TramiteConsultaPorIdExpediente(idBaja);
+                if (listaTramites.Count >0)
+                    repoTramite.eliminarTramitesAsociados(idBaja);
             }
             else{
                 throw new AutorizacionException();

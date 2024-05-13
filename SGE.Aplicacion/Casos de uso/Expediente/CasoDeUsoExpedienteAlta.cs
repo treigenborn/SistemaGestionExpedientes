@@ -3,7 +3,6 @@
 public class CasoDeUsoExpedienteAlta (IExpedienteRepositorio repoExpediente, IServicioAutorizacion autorizador)
 {
 
-// lanzar excepcion si no tiene permiso
     public void Ejecutar(Expediente e, int IdUsuario)
     {
         try 

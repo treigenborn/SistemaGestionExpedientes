@@ -43,11 +43,12 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
                     encontre = true;
             }
             if (encontre)
-            {
+            {   
+                sr.Dispose();
                 actualizarArchivo(listaExpediente);
             }
             else
-                throw new RepositorioException("La entidad que se intenta eliminar no existe.");
+                throw new RepositorioException("El expediente que se intenta eliminar no existe.");
         }
         catch (RepositorioException e)
         {
@@ -76,9 +77,12 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
                 listaExpediente.Add(eActual);
             }
             if (encontre)
+            {
+                sr.Dispose();
                 actualizarArchivo(listaExpediente);
+            }
             else
-                throw new RepositorioException("La entidad que se intenta modificar no existe.");
+                throw new RepositorioException();
         }
         catch (RepositorioException e)
         {
@@ -86,25 +90,47 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
         }
     }
 
-    public Expediente ExpedienteConsultaPorId(int IdExpediente)
+    public Expediente? ExpedienteConsultaPorId(int IdExpediente)
     {
-        Expediente resultado = new Expediente();
-        using var sr = new StreamReader(_nombreArch, true);
-        resultado = leerExpediente(sr);
-        while (!sr.EndOfStream || resultado.IdExpediente != IdExpediente)
+        try
         {
+            Expediente resultado = new Expediente();
+            using var sr = new StreamReader(_nombreArch, true);
             resultado = leerExpediente(sr);
+            while (!sr.EndOfStream && resultado.IdExpediente != IdExpediente)
+            {
+                resultado = leerExpediente(sr);
+                
+            }
+            if (resultado.IdExpediente == IdExpediente)
+            {
+                return resultado;
+            } 
+            else
+                throw new RepositorioException();
         }
-        return resultado;
+        catch (RepositorioException e)
+        {
+            Console.WriteLine(e.Message);
+            return null;
+        }
     }
 
     public List<Expediente> ExpedienteConsultaTodos()
     {
         List<Expediente> expedientes = new List<Expediente>();
-        using var sr = new StreamReader(_nombreArch, true);
-        while (!sr.EndOfStream)
+        try
+        {       
+            using var sr = new StreamReader(_nombreArch, true);
+            while (!sr.EndOfStream)
+            {
+                expedientes.Add(leerExpediente(sr));
+            }
+            if (expedientes.Count == 0) throw new RepositorioException();
+        }
+        catch (RepositorioException exp)
         {
-            expedientes.Add(leerExpediente(sr));
+            Console.WriteLine(exp.Message);
         }
         return expedientes;
     }
@@ -145,23 +171,19 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     private static int contadorActual()
     {
         using var sr = new StreamReader(_nombreArch, true);
-        using var sr2 = new StreamReader(_nombreArch, true);
-        if (sr2.ReadLine() == null)
-            return 0;
-        else
-        {
-            int ultimoId = 0;
+        int ultimoId = 0;
             while (!sr.EndOfStream)
-            {
-                ultimoId = int.Parse(sr.ReadLine() ?? "");
-                sr.ReadLine();
-                sr.ReadLine();
-                sr.ReadLine();
-                sr.ReadLine();
-                sr.ReadLine();
+            {      
+                string? id = sr.ReadLine();
+                if (!String.IsNullOrEmpty(id))
+                {
+                    ultimoId = Int32.Parse(id);
+                    for (int i=1; i<6; i++){
+                        sr.ReadLine(); 
+                    }
+                }
             }
-            return ultimoId;
-        }
+        return ultimoId; 
     }
 
 
