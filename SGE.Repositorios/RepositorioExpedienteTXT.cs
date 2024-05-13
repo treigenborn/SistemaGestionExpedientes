@@ -43,12 +43,14 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
                     encontre = true;
             }
             if (encontre)
-            {   
+            {
                 sr.Dispose();
                 actualizarArchivo(listaExpediente);
             }
             else
-                throw new RepositorioException("El expediente que se intenta eliminar no existe.");
+                throw new RepositorioException(
+                    "ExpedienteBaja: El expediente que se intenta eliminar no existe."
+                );
         }
         catch (RepositorioException e)
         {
@@ -98,18 +100,19 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
             while (!sr.EndOfStream && resultado.IdExpediente != IdExpediente)
             {
                 resultado = leerExpediente(sr);
-                
             }
             if (resultado.IdExpediente == IdExpediente)
             {
                 return resultado;
-            } 
+            }
             else
-                throw new RepositorioException();
+            {
+                throw new RepositorioException("ExpedienteConsultaPorId: el expediente no existe.");
+            }
         }
-        catch (RepositorioException e)
+        catch (RepositorioException ex)
         {
-            Console.WriteLine(e.Message);
+            Console.WriteLine(ex.Message);
             return null;
         }
     }
@@ -118,13 +121,14 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     {
         List<Expediente> expedientes = new List<Expediente>();
         try
-        {       
+        {
             using var sr = new StreamReader(_nombreArch, true);
             while (!sr.EndOfStream)
             {
                 expedientes.Add(leerExpediente(sr));
             }
-            if (expedientes.Count == 0) throw new RepositorioException();
+            if (expedientes.Count == 0)
+                throw new RepositorioException();
         }
         catch (RepositorioException exp)
         {
@@ -137,12 +141,20 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     private Expediente leerExpediente(StreamReader sr)
     {
         Expediente e = new Expediente();
-        e.IdExpediente = int.Parse(sr.ReadLine() ?? "");
-        e.FechaCreacion = DateTime.Parse(sr.ReadLine() ?? "");
-        e.FechaModificacion = DateTime.Parse(sr.ReadLine() ?? "");
-        e.Caratula = sr.ReadLine() ?? "";
-        e.Estado = Enum.Parse<EstadoExpediente>(sr.ReadLine() ?? "");
-        e.UsuarioUltModificacion = int.Parse(sr.ReadLine() ?? "");
+        string? id = sr.ReadLine();
+        if (!String.IsNullOrEmpty(id))
+        {
+            e.IdExpediente = int.Parse(id);
+            e.FechaCreacion = DateTime.Parse(sr.ReadLine() ?? "");
+            e.FechaModificacion = DateTime.Parse(sr.ReadLine() ?? "");
+            e.Caratula = sr.ReadLine() ?? "";
+            e.Estado = Enum.Parse<EstadoExpediente>(sr.ReadLine() ?? "");
+            e.UsuarioUltModificacion = int.Parse(sr.ReadLine() ?? "");
+        }
+        else
+        {
+            throw new RepositorioException("leerExpediente: El archivo está vacío");
+        }
         return e;
     }
 
@@ -170,28 +182,28 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     {
         using var sr = new StreamReader(_nombreArch, true);
         int ultimoId = 0;
-            while (!sr.EndOfStream)
-            {      
-                string? id = sr.ReadLine();
-                if (!String.IsNullOrEmpty(id))
+        while (!sr.EndOfStream)
+        {
+            string? id = sr.ReadLine();
+            if (!String.IsNullOrEmpty(id))
+            {
+                ultimoId = Int32.Parse(id);
+                for (int i = 1; i < 6; i++)
                 {
-                    ultimoId = Int32.Parse(id);
-                    for (int i=1; i<6; i++){
-                        sr.ReadLine(); 
-                    }
+                    sr.ReadLine();
                 }
             }
-        return ultimoId; 
+        }
+        return ultimoId;
     }
-
 
     private void escribirValores(Expediente e, StreamWriter sw)
     {
-            sw.WriteLine(e.IdExpediente);
-            sw.WriteLine(e.FechaCreacion);
-            sw.WriteLine(e.FechaModificacion);
-            sw.WriteLine(e.Caratula);
-            sw.WriteLine(e.Estado);
-            sw.WriteLine(e.UsuarioUltModificacion);
+        sw.WriteLine(e.IdExpediente);
+        sw.WriteLine(e.FechaCreacion);
+        sw.WriteLine(e.FechaModificacion);
+        sw.WriteLine(e.Caratula);
+        sw.WriteLine(e.Estado);
+        sw.WriteLine(e.UsuarioUltModificacion);
     }
 }

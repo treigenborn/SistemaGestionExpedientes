@@ -27,19 +27,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
+    "/home/TobiasReigenborn/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Proyecto .net\\SistemaGestionExpedientes\\SGE.Repositorios\\SGE.Repositorios.csproj",
+      "projectUniqueName": "/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Repositorios/SGE.Repositorios.csproj",
       "projectName": "SGE.Repositorios",
-      "projectPath": "C:\\Users\\Usuario\\Desktop\\Proyecto .net\\SistemaGestionExpedientes\\SGE.Repositorios\\SGE.Repositorios.csproj",
-      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Desktop\\Proyecto .net\\SistemaGestionExpedientes\\SGE.Repositorios\\obj\\",
+      "projectPath": "/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Repositorios/SGE.Repositorios.csproj",
+      "packagesPath": "/home/TobiasReigenborn/.nuget/packages/",
+      "outputPath": "/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Repositorios/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/TobiasReigenborn/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -51,8 +51,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Usuario\\Desktop\\Proyecto .net\\SistemaGestionExpedientes\\SGE.Aplicacion\\SGE.Aplicacion.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Desktop\\Proyecto .net\\SistemaGestionExpedientes\\SGE.Aplicacion\\SGE.Aplicacion.csproj"
+            "/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/SGE.Aplicacion.csproj": {
+              "projectPath": "/home/TobiasReigenborn/Escritorio/tpSGE/SGE.Aplicacion/SGE.Aplicacion.csproj"
             }
           }
         }
@@ -87,7 +87,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

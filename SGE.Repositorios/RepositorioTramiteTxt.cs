@@ -34,13 +34,14 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                 Tramite tActual = leerTramite(sr);
                 if (tActual.IdTramite != idBorrarTramite)
                     listaTramite.Add(tActual);
-                else  encontre = true;
+                else
+                    encontre = true;
             }
             if (encontre)
             {
                 sr.Dispose();
                 actualizarArchivo(listaTramite);
-            }  
+            }
             else
                 throw new RepositorioException("El tramite que se intenta eliminar no existe.");
         }
@@ -71,13 +72,13 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                 }
                 listaTramites.Add(tActual);
             }
-            if (encontre) 
+            if (encontre)
             {
                 sr.Dispose();
                 actualizarArchivo(listaTramites);
-            }         
+            }
             else
-                 throw new RepositorioException();
+                throw new RepositorioException();
         }
         catch (RepositorioException e)
         {
@@ -88,7 +89,6 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
             Console.WriteLine(ex.Message);
         }
     }
-
 
     public List<Tramite> TramiteConsultaPorEtiqueta(EtiquetaTramite etiqueta)
     {
@@ -104,9 +104,10 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                     listaTramites.Add(tActual);
                 }
             }
-            if (listaTramites.Count == 0) throw new RepositorioException();
+            if (listaTramites.Count == 0)
+                throw new RepositorioException();
         }
-        catch(RepositorioException exc)
+        catch (RepositorioException exc)
         {
             Console.WriteLine(exc.Message);
         }
@@ -128,7 +129,8 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                     listaTramites.Add(tActual);
                 }
             }
-            if (listaTramites.Count == 0 ) throw new RepositorioException();
+            if (listaTramites.Count == 0)
+                throw new RepositorioException("TramiteConsultaPorIdExpediente: el expediente no tiene trámites asociados.");
         }
         catch (RepositorioException exc)
         {
@@ -140,12 +142,19 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
     public Tramite TramiteConsultaUltimo()
     {
         Tramite t = new Tramite();
-        t.IdTramite = -1;
-        using var sr = new StreamReader(_nombreArch, true);
-
-        while (!sr.EndOfStream)
+        try
         {
-            t = leerTramite(sr);
+            t.IdTramite = -1;
+            using var sr = new StreamReader(_nombreArch, true);
+
+            while (!sr.EndOfStream)
+            {
+                t = leerTramite(sr);
+            }
+        }
+        catch (RepositorioException ex)
+        {
+            Console.WriteLine(ex.Message);
         }
         return t;
     }
@@ -165,13 +174,21 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
     private Tramite leerTramite(StreamReader sr)
     {
         Tramite t = new Tramite();
-        t.IdTramite = int.Parse(sr.ReadLine() ?? "");
-        t.ExpedienteID = int.Parse(sr.ReadLine() ?? "");
-        t.TipoTramite = Enum.Parse<EtiquetaTramite>(sr.ReadLine() ?? "");
-        t.ContenidoTramite = (sr.ReadLine() ?? "");
-        t.FechaCreacion = DateTime.Parse(sr.ReadLine() ?? "");
-        t.FechaUltModificacion = DateTime.Parse(sr.ReadLine() ?? "");
-        t.UsuarioUltModificacion = int.Parse(sr.ReadLine() ?? "");
+        string? id = sr.ReadLine();
+        if (!String.IsNullOrEmpty(id))
+        {
+            t.IdTramite = int.Parse(id);
+            t.ExpedienteID = int.Parse(sr.ReadLine() ?? "");
+            t.TipoTramite = Enum.Parse<EtiquetaTramite>(sr.ReadLine() ?? "");
+            t.ContenidoTramite = (sr.ReadLine() ?? "");
+            t.FechaCreacion = DateTime.Parse(sr.ReadLine() ?? "");
+            t.FechaUltModificacion = DateTime.Parse(sr.ReadLine() ?? "");
+            t.UsuarioUltModificacion = int.Parse(sr.ReadLine() ?? "");
+        }
+        else
+        {
+            throw new RepositorioException();
+        }
         return t;
     }
 
@@ -195,26 +212,25 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
         }
     }
 
-
     private static int contadorActual()
     {
         using var sr = new StreamReader(_nombreArch, true);
         int ultimoId = 0;
-            while (!sr.EndOfStream)
-            {      
-                string? id = sr.ReadLine();
-                if (!String.IsNullOrEmpty(id))
+        while (!sr.EndOfStream)
+        {
+            string? id = sr.ReadLine();
+            if (!String.IsNullOrEmpty(id))
+            {
+                ultimoId = Int32.Parse(id);
+                for (int i = 1; i < 7; i++)
                 {
-                    ultimoId = Int32.Parse(id);
-                    for (int i=1; i<7; i++){
-                        sr.ReadLine(); 
-                    }
+                    sr.ReadLine();
                 }
             }
-        return ultimoId; 
+        }
+        return ultimoId;
     }
-     
-     
+
     public void eliminarTramitesAsociados(int IdExpediente)
     {
         bool encontre = false;
@@ -228,6 +244,9 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                 if (t.ExpedienteID != IdExpediente)
                 {
                     listaTramites.Add(t);
+                }
+                else
+                {
                     encontre = true;
                 }
             }
@@ -236,7 +255,7 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                 actualizarArchivo(listaTramites);
             }
             else
-                throw new RepositorioException("La entidad que se intenta eliminar no existe.");
+                throw new RepositorioException("eliminarTramitesAsociados: La entidad que se intenta eliminar no existe.");
         }
         catch (RepositorioException e)
         {

@@ -2,13 +2,9 @@
 
 public class AutorizacionException : Exception
 {
-     public AutorizacionException(string message)  : base(message)
-    {
- 
-    }
+    public AutorizacionException(string message)
+        : base(message) { }
 
-    public AutorizacionException() : base("Error de autorización: No tiene permisos.")
-    {
- 
-    }
+    public AutorizacionException()
+        : base("Error de autorización: No tiene permisos.") { }
 }
