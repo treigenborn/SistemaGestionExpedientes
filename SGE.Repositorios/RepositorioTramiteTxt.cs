@@ -24,25 +24,23 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
 
     public void TramiteBaja(int idBorrarTramite)
     {
+        bool encontre = false;
+        List<Tramite> listaTramite = new List<Tramite>();
         try
         {
-            bool encontre = false;
-            List<Tramite> listaTramite = new List<Tramite>();
             using var sr = new StreamReader(_nombreArch, true);
             while (!sr.EndOfStream)
             {
                 Tramite tActual = leerTramite(sr);
                 if (tActual.IdTramite != idBorrarTramite)
                     listaTramite.Add(tActual);
-                else
-                    encontre = true;
+                else  encontre = true;
             }
             if (encontre)
             {
                 sr.Dispose();
                 actualizarArchivo(listaTramite);
-            }
-                
+            }  
             else
                 throw new RepositorioException("El tramite que se intenta eliminar no existe.");
         }
@@ -71,6 +69,7 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
                     tActual.UsuarioUltModificacion = tModificar.UsuarioUltModificacion;
                     encontre = true;
                 }
+                listaTramites.Add(tActual);
             }
             if (encontre) 
             {
@@ -91,39 +90,49 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
     }
 
 
-    /* 
-        Evaluar el caso en el que no se encuentre el tramite, que se devuelve? 
-    */
     public List<Tramite> TramiteConsultaPorEtiqueta(EtiquetaTramite etiqueta)
     {
         List<Tramite> listaTramites = new List<Tramite>();
-
-        using var sr = new StreamReader(_nombreArch, true);
-
-        while (!sr.EndOfStream)
+        try
         {
-            Tramite tActual = leerTramite(sr);
-            if (tActual.TipoTramite == etiqueta)
+            using var sr = new StreamReader(_nombreArch, true);
+            while (!sr.EndOfStream)
             {
-                listaTramites.Add(tActual);
+                Tramite tActual = leerTramite(sr);
+                if (tActual.TipoTramite == etiqueta)
+                {
+                    listaTramites.Add(tActual);
+                }
             }
+            if (listaTramites.Count == 0) throw new RepositorioException();
         }
+        catch(RepositorioException exc)
+        {
+            Console.WriteLine(exc.Message);
+        }
+
         return listaTramites;
     }
 
     public List<Tramite> TramiteConsultaPorIdExpediente(int idExpediente)
     {
         List<Tramite> listaTramites = new List<Tramite>();
-
-        using var sr = new StreamReader(_nombreArch, true);
-
-        while (!sr.EndOfStream)
+        try
         {
-            Tramite tActual = leerTramite(sr);
-            if (tActual.ExpedienteID == idExpediente)
+            using var sr = new StreamReader(_nombreArch, true);
+            while (!sr.EndOfStream)
             {
-                listaTramites.Add(tActual);
+                Tramite tActual = leerTramite(sr);
+                if (tActual.ExpedienteID == idExpediente)
+                {
+                    listaTramites.Add(tActual);
+                }
             }
+            if (listaTramites.Count == 0 ) throw new RepositorioException();
+        }
+        catch (RepositorioException exc)
+        {
+            Console.WriteLine(exc.Message);
         }
         return listaTramites;
     }
@@ -131,6 +140,7 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
     public Tramite TramiteConsultaUltimo()
     {
         Tramite t = new Tramite();
+        t.IdTramite = -1;
         using var sr = new StreamReader(_nombreArch, true);
 
         while (!sr.EndOfStream)
@@ -186,8 +196,6 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
     }
 
 
-
-// modificar desp
     private static int contadorActual()
     {
         using var sr = new StreamReader(_nombreArch, true);
@@ -205,14 +213,14 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
             }
         return ultimoId; 
     }
-
-
+     
+     
     public void eliminarTramitesAsociados(int IdExpediente)
     {
+        bool encontre = false;
+        List<Tramite> listaTramites = new List<Tramite>();
         try
         {
-            bool encontre = false;
-            List<Tramite> listaTramites = new List<Tramite>();
             using var sr = new StreamReader(_nombreArch, true);
             while (!sr.EndOfStream)
             {

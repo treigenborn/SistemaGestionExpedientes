@@ -12,11 +12,13 @@ public class CasoDeUsoTramiteBaja(
         {
             if (autorizador.TienePermiso(IdUsuario, Permiso.TramiteBaja))
             {
-                Tramite t = repoTramite.TramiteConsultaUltimo();
+                Tramite ultimoTramite = repoTramite.TramiteConsultaUltimo();                
                 repoTramite.TramiteBaja(idTramite);
-                if (t.IdTramite == idTramite)
+                if (ultimoTramite.IdTramite == idTramite)
                 {
-                    actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite);
+                    Tramite nuevoUltTramite = repoTramite.TramiteConsultaUltimo();
+                    if (nuevoUltTramite.IdTramite > 0) 
+                        actualizacionEstado.actualizacionEstadoExpediente(nuevoUltTramite.ExpedienteID, nuevoUltTramite.TipoTramite);
                 }
             }
             else

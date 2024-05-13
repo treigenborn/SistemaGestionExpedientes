@@ -28,4 +28,9 @@ public class Tramite
         FechaUltModificacion = DateTime.Now;
         ContenidoTramite="";
     }
+
+    public override string ToString()
+    {
+        return $"Id de Expediente: {ExpedienteID}, Id de tramite: {IdTramite}, Tipo de tramite: {TipoTramite} , Contenido del tramite: {ContenidoTramite}  ";
+    }
 }

@@ -27,36 +27,46 @@ class Program
         CasoDeUsoTramiteConsultaPorEtiqueta CUTConsultaPorEtiqueta = new CasoDeUsoTramiteConsultaPorEtiqueta(repoTramite);
 
 
-
-
         Console.WriteLine("Sistema de Gestión de Expedientes");
 
-        Expediente e1 = new Expediente("Caratula1234");
+        // damos de alta expedientes 
+        //CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"),1);
+        //CUEAlta.Ejecutar(new Expediente("Caratula Expediente 2 "),1);
 
 
-        Console.WriteLine(e1.Caratula);
-        Console.WriteLine(e1.FechaCreacion);
 
-        Console.WriteLine("\n\n");
-        Tramite t1 = new Tramite(1, EtiquetaTramite.PaseAEstudio, "Contenido tramite");
-
-        //Tramite t2 = new Tramite();
-        //Console.WriteLine(t2.TipoTramite);
-        //Console.WriteLine(t2.ContenidoTramite);
-
-        Console.WriteLine("\n\n");
-
-        // creamos los expedientes
-        //CUEAlta.Ejecutar(e1,1);
-        //CUEAlta.Ejecutar(new Expediente ("CaratulaNueva"),1);
-
-        // creamos los tramites
-        //CUTAlta.Ejecutar(t1,1);
-        //CUTAlta.Ejecutar(new Tramite (2,EtiquetaTramite.PaseAEstudio,"Contenido tramite 2"),1);
+        //Damos de alta tramites, y lo asociamos a los expedientes.
+        //Tramite t1 = new Tramite(1,EtiquetaTramite.Resolucion,"Contenidooooooo");
         
-        Expediente? e = CUEConTramitesAsociados.Ejecutar(1);
 
-        Console.WriteLine(e?.listaDeTramites?.Count);
 
+        //CUTBaja.Ejecutar(1,1);
+        
+        repoTramite.eliminarTramitesAsociados(1);
+
+        //CUEBaja.Ejecutar(1,1);
+
+
+
+
+
+
+
+
+
+
+
+        /*
+
+        Expediente? e = CUEConTramitesAsociados.Ejecutar(1);    
+        if (e?.listaDeTramites != null){
+            foreach (Tramite t in e.listaDeTramites){
+                Console.WriteLine(t.ToString());
+            }
+        }
+
+        List<Expediente> listaExpedientes = CUEConsultaTodos.Ejecutar();
+        Console.WriteLine(listaExpedientes.Count());
+        */
     }
 }

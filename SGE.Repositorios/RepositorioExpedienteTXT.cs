@@ -58,20 +58,18 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
 
     public void ExpedienteModificacion(Expediente eModificar)
     {
+        bool encontre = false;
+        List<Expediente> listaExpediente = new List<Expediente>();
         try
         {
-            bool encontre = false;
-            List<Expediente> listaExpediente = new List<Expediente>();
             using var sr = new StreamReader(_nombreArch, true);
             while (!sr.EndOfStream)
             {
                 Expediente eActual = leerExpediente(sr);
                 if (eActual.IdExpediente == eModificar.IdExpediente)
                 {
-                    eActual.FechaModificacion = DateTime.Now;
                     eActual.Caratula = eModificar.Caratula;
                     eActual.Estado = eModificar.Estado;
-                    eActual.UsuarioUltModificacion = eModificar.UsuarioUltModificacion;
                     encontre = true;
                 }
                 listaExpediente.Add(eActual);

@@ -7,11 +7,11 @@ public class CasoDeUsoTramiteAlta (ITramiteRepositorio repoTramite, IServicioAut
         try
         {
             if(autorizador.TienePermiso(IdUsuario, Permiso.TramiteAlta)) {
-            t.FechaCreacion = DateTime.Now;
-            t.FechaUltModificacion = DateTime.Now;
-            t.UsuarioUltModificacion = IdUsuario;
-            repoTramite.TramiteAlta(t); 
-            actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite);
+                t.FechaCreacion = DateTime.Now;
+                t.FechaUltModificacion = DateTime.Now;
+                t.UsuarioUltModificacion = IdUsuario;
+                repoTramite.TramiteAlta(t); 
+                actualizacionEstado.actualizacionEstadoExpediente(t.ExpedienteID, t.TipoTramite);
             }
             else
             {
@@ -22,6 +22,6 @@ public class CasoDeUsoTramiteAlta (ITramiteRepositorio repoTramite, IServicioAut
         {
             Console.WriteLine(e.Message); 
         }
-    } 
+    }
     
 }
