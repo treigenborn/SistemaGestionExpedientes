@@ -5,28 +5,25 @@ namespace SGE.Repositorios;
 
 public class RepositorioExpedienteTXT : IExpedienteRepositorio
 {
-    static int contadorExpedientes = contadorActual();
     static readonly string _nombreArch = "Expedientes.txt";
+    static int contadorExpedientes = contadorActual();
 
     public void ExpedienteAlta(Expediente e)
     {
-        // modificar para lanzar la excepcion aca.
         try
         {
             ExpedienteValidador.Validar(e);
             using var sw = new StreamWriter(_nombreArch, true);
-            e.IdExpediente = ++contadorExpedientes; 
-            sw.WriteLine(e.IdExpediente);
-            sw.WriteLine(e.IdTramite);
-            sw.WriteLine(e.FechaCreacion);
-            sw.WriteLine(e.FechaModificacion);
-            sw.WriteLine(e.Caratula);
-            sw.WriteLine(e.Estado);
-            sw.WriteLine(e.UsuarioUltModificacion);
+            e.IdExpediente = ++contadorExpedientes;
+            escribirValores(e, sw);
         }
         catch (ValidacionException exc)
         {
             Console.WriteLine(exc.Message);
+        }
+        catch (Exception exc2)
+        {
+            Console.WriteLine(exc2);
         }
     }
 
@@ -39,7 +36,7 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
             using var sr = new StreamReader(_nombreArch, true);
             while (!sr.EndOfStream)
             {
-                Expediente eActual = leerExpediente(sr); 
+                Expediente eActual = leerExpediente(sr);
                 if (eActual.IdExpediente != idBorrarExpediente)
                     listaExpediente.Add(eActual);
                 else
@@ -67,7 +64,7 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
             using var sr = new StreamReader(_nombreArch, true);
             while (!sr.EndOfStream)
             {
-                Expediente eActual = leerExpediente(sr); 
+                Expediente eActual = leerExpediente(sr);
                 if (eActual.IdExpediente == eModificar.IdExpediente)
                 {
                     eActual.FechaModificacion = DateTime.Now;
@@ -101,12 +98,13 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
         return resultado;
     }
 
-    public List<Expediente> ExpedienteConsultaTodos() {
+    public List<Expediente> ExpedienteConsultaTodos()
+    {
         List<Expediente> expedientes = new List<Expediente>();
         using var sr = new StreamReader(_nombreArch, true);
         while (!sr.EndOfStream)
         {
-             expedientes.Add(leerExpediente(sr));
+            expedientes.Add(leerExpediente(sr));
         }
         return expedientes;
     }
@@ -116,7 +114,6 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     {
         Expediente e = new Expediente();
         e.IdExpediente = int.Parse(sr.ReadLine() ?? "");
-        e.IdTramite = int.Parse(sr.ReadLine() ?? "");
         e.FechaCreacion = DateTime.Parse(sr.ReadLine() ?? "");
         e.FechaModificacion = DateTime.Parse(sr.ReadLine() ?? "");
         e.Caratula = sr.ReadLine() ?? "";
@@ -132,9 +129,10 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
             if (File.Exists(_nombreArch))
             {
                 File.Delete(_nombreArch);
+                using var sw = new StreamWriter(_nombreArch, true);
                 foreach (Expediente e in listaExpedientes)
                 {
-                    ExpedienteAlta(e);
+                    escribirValores(e, sw);
                 }
             }
         }
@@ -147,7 +145,8 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
     private static int contadorActual()
     {
         using var sr = new StreamReader(_nombreArch, true);
-        if (sr.ReadLine() == null)
+        using var sr2 = new StreamReader(_nombreArch, true);
+        if (sr2.ReadLine() == null)
             return 0;
         else
         {
@@ -160,9 +159,19 @@ public class RepositorioExpedienteTXT : IExpedienteRepositorio
                 sr.ReadLine();
                 sr.ReadLine();
                 sr.ReadLine();
-                sr.ReadLine();
             }
             return ultimoId;
         }
+    }
+
+
+    private void escribirValores(Expediente e, StreamWriter sw)
+    {
+            sw.WriteLine(e.IdExpediente);
+            sw.WriteLine(e.FechaCreacion);
+            sw.WriteLine(e.FechaModificacion);
+            sw.WriteLine(e.Caratula);
+            sw.WriteLine(e.Estado);
+            sw.WriteLine(e.UsuarioUltModificacion);
     }
 }

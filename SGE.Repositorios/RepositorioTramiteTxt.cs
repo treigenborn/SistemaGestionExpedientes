@@ -4,8 +4,8 @@ namespace SGE.Repositorios;
 
 public class RepositorioTramiteTxt : ITramiteRepositorio
 {
-    static int contadorTramites = contadorActual();
     static readonly string _nombreArch = "Tramites.txt";
+    static int contadorTramites = contadorActual();
 
     public void TramiteAlta(Tramite t)
     {
@@ -14,7 +14,6 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
             TramiteValidador.Validar(t);
             using var sw = new StreamWriter(_nombreArch, true);
             t.IdTramite = ++contadorTramites;
-            t.UsuarioUltModificacion = t.UsuarioUltModificacion;
             escribirValores(t, sw);
         }
         catch (ValidacionException exc)
@@ -180,7 +179,8 @@ public class RepositorioTramiteTxt : ITramiteRepositorio
     private static int contadorActual()
     {
         using var sr = new StreamReader(_nombreArch, true);
-        if (sr.ReadLine() == null)
+        using var sr2 = new StreamReader(_nombreArch, true);
+        if (sr2.ReadLine() == null)
             return 0;
         else
         {

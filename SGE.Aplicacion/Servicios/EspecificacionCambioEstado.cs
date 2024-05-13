@@ -8,13 +8,10 @@ public class EspecificacionCambioEstado
         {
             case EtiquetaTramite.Resolucion:
                 return EstadoExpediente.ConResolucion;
-                break;
             case EtiquetaTramite.PaseAEstudio:
                 return EstadoExpediente.ParaResolver;
-                break;
             case EtiquetaTramite.PaseAlArchivo:
                 return EstadoExpediente.Finalizado;
-                break;
             default: 
                return e;
         }

@@ -9,8 +9,6 @@ public class CasoDeUsoExpedienteAlta (IExpedienteRepositorio repoExpediente, ISe
         try 
         {
             if(autorizador.TienePermiso(IdUsuario, Permiso.ExpedienteAlta)){
-            e.FechaCreacion = DateTime.Now;
-            e.FechaModificacion = DateTime.Now;
             e.UsuarioUltModificacion = IdUsuario;
             repoExpediente.ExpedienteAlta(e);
             }
