@@ -12,13 +12,31 @@ class Program
         ITramiteRepositorio repoTramite = new RepositorioTramiteTxt();
         IServicioAutorizacion servicioAutorizacion = new ServicioAutorizacionProvisorio();
         EspecificacionCambioEstado espCambioEstado = new EspecificacionCambioEstado();
-        ServicioActualizacionEstado servActEstado = new ServicioActualizacionEstado(espCambioEstado,repoExpediente);
-        CasoDeUsoExpedienteAlta CUEAlta = new CasoDeUsoExpedienteAlta(repoExpediente,servicioAutorizacion);
-        CasoDeUsoExpedienteBaja CUEBaja = new CasoDeUsoExpedienteBaja(repoExpediente,servicioAutorizacion,repoTramite);
-        CasoDeUsoExpedienteModificacion CUEModificacion = new CasoDeUsoExpedienteModificacion(repoExpediente,servicioAutorizacion);
-        CasoDeUsoExpedienteConsultaPorId CUEConsultaPorId = new CasoDeUsoExpedienteConsultaPorId(repoExpediente);
-        CasoDeUsoExpedienteConsultaTodos CUEConsultaTodos = new CasoDeUsoExpedienteConsultaTodos(repoExpediente);
-        CasoDeUsoExpedienteConTramitesAsociados CUEConTramitesAsociados = new CasoDeUsoExpedienteConTramitesAsociados(repoExpediente, repoTramite);
+        ServicioActualizacionEstado servActEstado = new ServicioActualizacionEstado(
+            espCambioEstado,
+            repoExpediente
+        );
+        CasoDeUsoExpedienteAlta CUEAlta = new CasoDeUsoExpedienteAlta(
+            repoExpediente,
+            servicioAutorizacion
+        );
+        CasoDeUsoExpedienteBaja CUEBaja = new CasoDeUsoExpedienteBaja(
+            repoExpediente,
+            servicioAutorizacion,
+            repoTramite
+        );
+        CasoDeUsoExpedienteModificacion CUEModificacion = new CasoDeUsoExpedienteModificacion(
+            repoExpediente,
+            servicioAutorizacion
+        );
+        CasoDeUsoExpedienteConsultaPorId CUEConsultaPorId = new CasoDeUsoExpedienteConsultaPorId(
+            repoExpediente
+        );
+        CasoDeUsoExpedienteConsultaTodos CUEConsultaTodos = new CasoDeUsoExpedienteConsultaTodos(
+            repoExpediente
+        );
+        CasoDeUsoExpedienteConTramitesAsociados CUEConTramitesAsociados =
+            new CasoDeUsoExpedienteConTramitesAsociados(repoExpediente, repoTramite);
 
         CasoDeUsoTramiteAlta CUTAlta = new CasoDeUsoTramiteAlta(
             repoTramite,
@@ -38,17 +56,13 @@ class Program
         CasoDeUsoTramiteConsultaPorEtiqueta CUTConsultaPorEtiqueta =
             new CasoDeUsoTramiteConsultaPorEtiqueta(repoTramite);
 
-        //TestCambioEstados();
+        TestCambioEstados();
         //TestTramitesAsociados();
         //TestExpedienteConsultaTodos();
         //TestModificaciones();
         //TestConsultaTramitePorEtiqueta();
         //TestUsuarioSinPermisos();
-        TestEntidadesVacias();
-
-
-
-
+        //TestEntidadesVacias();
 
         void TestCambioEstados()
         {
@@ -65,21 +79,29 @@ class Program
 
             CUTAlta.Ejecutar(t1, 1);
 
-            Expediente? expe2 = CUEConsultaPorId.Ejecutar(1);
+            expe = CUEConsultaPorId.Ejecutar(1);
             Console.WriteLine("Después de agregar un trámite: ");
-            Console.WriteLine(expe2?.Estado);
+            Console.WriteLine(expe?.Estado);
 
             CUTAlta.Ejecutar(t2, 1);
 
-            Expediente? expe3 = CUEConsultaPorId.Ejecutar(1);
+            expe = CUEConsultaPorId.Ejecutar(1);
             Console.WriteLine("Después de agregar otro trámite: ");
-            Console.WriteLine(expe3?.Estado);
+            Console.WriteLine(expe?.Estado);
 
             CUTBaja.Ejecutar(2, 1);
 
-            Expediente? expe4 = CUEConsultaPorId.Ejecutar(1);
+            expe = CUEConsultaPorId.Ejecutar(1);
             Console.WriteLine("Después de eliminar el último trámite: ");
-            Console.WriteLine(expe4?.Estado);
+            Console.WriteLine(expe?.Estado);
+
+            t1.IdTramite = 1;
+            t1.TipoTramite = EtiquetaTramite.PaseAEstudio;
+
+            CUTModificacion.Ejecutar(t1, 1);
+            expe = CUEConsultaPorId.Ejecutar(1);
+            Console.WriteLine("Después de modificar el trámite restante: ");
+            Console.WriteLine(expe?.Estado);
         }
 
         void TestTramitesAsociados()
@@ -124,22 +146,28 @@ class Program
             CUEModificacion.Ejecutar(e1, 1);
             Expediente? e2 = CUEConsultaPorId.Ejecutar(1);
             Console.WriteLine(e2?.Caratula);
-
         }
 
-        void TestConsultaTramitePorEtiqueta() {
-              CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.Resolucion, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.PaseAEstudio, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.Despacho, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.PaseAlArchivo, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.PaseAlArchivo, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.PaseAlArchivo, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.Notificacion, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.EscritoPresentado, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.EscritoPresentado, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.Resolucion, "Contenidooooooo"), 1);
-            CUTAlta.Ejecutar( new Tramite(1, EtiquetaTramite.Resolucion, "Contenidooooooo"), 1);
+        void TestConsultaTramitePorEtiqueta()
+        {
+            CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 1);
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.Resolucion, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.PaseAEstudio, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.Despacho, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.PaseAlArchivo, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.PaseAlArchivo, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.PaseAlArchivo, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.Notificacion, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(
+                new Tramite(1, EtiquetaTramite.EscritoPresentado, "Contenidooooooo"),
+                1
+            );
+            CUTAlta.Ejecutar(
+                new Tramite(1, EtiquetaTramite.EscritoPresentado, "Contenidooooooo"),
+                1
+            );
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.Resolucion, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.Resolucion, "Contenidooooooo"), 1);
 
             List<Tramite> l1 = CUTConsultaPorEtiqueta.Ejecutar(EtiquetaTramite.EscritoPresentado);
             List<Tramite> l2 = CUTConsultaPorEtiqueta.Ejecutar(EtiquetaTramite.PaseAlArchivo);
@@ -147,7 +175,8 @@ class Program
             Console.WriteLine(l2.Count);
         }
 
-        void TestUsuarioSinPermisos() {
+        void TestUsuarioSinPermisos()
+        {
             CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 1);
             CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 1);
             CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 2); // id Diferente a 1
@@ -155,12 +184,12 @@ class Program
             Console.WriteLine(listaExpedientes.Count());
         }
 
-        void TestEntidadesVacias() {
+        void TestEntidadesVacias()
+        {
             CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 1);
             CUEAlta.Ejecutar(new Expediente(), 1);
             List<Expediente> listaExpedientes = CUEConsultaTodos.Ejecutar();
             Console.WriteLine(listaExpedientes.Count());
-
 
             CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.Resolucion, "Contenidooooooo"), 1);
             CUTAlta.Ejecutar(new Tramite(), 1);
