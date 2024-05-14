@@ -43,8 +43,8 @@ class Program
         //TestExpedienteConsultaTodos();
         //TestModificaciones();
         //TestConsultaTramitePorEtiqueta();
-
-
+        //TestUsuarioSinPermisos();
+        TestEntidadesVacias();
 
 
 
@@ -145,6 +145,25 @@ class Program
             List<Tramite> l2 = CUTConsultaPorEtiqueta.Ejecutar(EtiquetaTramite.PaseAlArchivo);
             Console.WriteLine(l1.Count);
             Console.WriteLine(l2.Count);
+        }
+
+        void TestUsuarioSinPermisos() {
+            CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 1);
+            CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 1);
+            CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 2); // id Diferente a 1
+            List<Expediente> listaExpedientes = CUEConsultaTodos.Ejecutar();
+            Console.WriteLine(listaExpedientes.Count());
+        }
+
+        void TestEntidadesVacias() {
+            CUEAlta.Ejecutar(new Expediente("Caratula Expediente 1"), 1);
+            CUEAlta.Ejecutar(new Expediente(), 1);
+            List<Expediente> listaExpedientes = CUEConsultaTodos.Ejecutar();
+            Console.WriteLine(listaExpedientes.Count());
+
+
+            CUTAlta.Ejecutar(new Tramite(1, EtiquetaTramite.Resolucion, "Contenidooooooo"), 1);
+            CUTAlta.Ejecutar(new Tramite(), 1);
         }
     }
 }
